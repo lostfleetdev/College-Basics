@@ -60,6 +60,9 @@ int main(){
     cout << "Find: ";
     int n;
     cin >> n;
-    cout << search_list(head, n) << endl;
+
+    if(n != 0){
+        cout << "Number " << n << " present at pointer"
+    }
     return 0;
 }
