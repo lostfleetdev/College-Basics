@@ -4,7 +4,7 @@ using namespace std;
 
 int prnt_ar(int arr[],int sz, char g){
     if(g == 'o'){
-        cout << "OG Array: " << endl;
+        cout << "Original Array: " << endl;
     }
     else if(g == 'r'){
         cout << "Sorted Array: " << endl;
