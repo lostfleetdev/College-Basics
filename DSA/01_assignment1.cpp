@@ -32,8 +32,8 @@ int travrs(int ar[], int sz){
 //bubble sorting an array
 int bblsrt(int arr[], int sz){
     int temp;
-    for(int j = 0; j < sz; j++){
-        for(int i = 0;i < sz; i++){
+    for(int j = 0; j < sz-1; j++){
+        for(int i = 0;i < sz-j-1; i++){
             if(arr[i] > arr[i+1]){
                 temp = arr[i];
                 arr[i] = arr[i+1];

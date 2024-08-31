@@ -29,8 +29,24 @@ void upd(int ar[], int indx, int ele){
 }
 
 
+//Sorting :Bubble Sorting
+void bbl_srt(int ar[], int s){
+    int temp;
+    for(int j = 0; j < s-1; j++){
+        for(int i = 0; i < s-j-1; i++){
+            if(ar[i] >= ar[i+1]){
+                temp = ar[i];
+                ar[i] = ar[i+1];
+                ar[i+1] = temp;
+            }
+        }
+    }
+    travrs_array(ar, s);
+}
+
+
 int main(){
-    int arr[5] = {1,5,3,4,7};
+    int arr[5] = {1,5,3,4,8};
     prnt_array(arr, 5);
     endl();
     travrs_array(arr, 5);
@@ -38,5 +54,7 @@ int main(){
     upd(arr, 2, 2);
     travrs_array(arr, 5);
     endl();
+    bbl_srt(arr, 5);
+
     return 0;   
 }
