@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
 
 using namespace std;
 
@@ -11,7 +10,11 @@ protected:
 public:
     Media(string t, double p) : title(t), price(p) {}
 
-    virtual void display() {}    
+    virtual void getdata() {};
+    virtual void display() {}; 
+    virtual void setdata() {
+        this->getdata();
+    }  
 };
 
 class Book : public Media {
@@ -20,6 +23,14 @@ private:
 public:
     Book(string t, double p, int pg) : Media(t, p), pages(pg) {}
 
+    void getdata() {
+        cout << "\nBook Title: ";
+        cin >> title;
+        cout << "\nPrice: ";
+        cin >> price;
+        cout << "\nPages: ";
+        cin >> pages;
+    }
     void display() {
         cout << "Title: " << title << endl;
         cout << "Price: $" << price << endl;
@@ -35,7 +46,14 @@ private:
 public:
     Tape(string t, double p, int pt) : Media(t, p), playTime(pt) {}
 
-    
+    void getdata() {
+        cout << "\nTape Title: ";
+        cin >> title;
+        cout << "\nPrice: ";
+        cin >> price;
+        cout << "\nPlay time: ";
+        cin >> playTime;
+    }
     void display() {
         cout << "Title: " << title << endl;
         cout << "Price: $" << price << endl;
@@ -45,17 +63,16 @@ public:
 };
 
 int main() {
-    vector<Media*> list;
+    Media* media1 = new Book("The Expanse : Caliban's War", 19.99, 300);
+    Media* media2 = new Tape("Interstellar", 9.99, 166);
 
-    list.push_back(new Book("The Expanse : Caliban's War", 19.99, 300));
-    list.push_back(new Tape("Interstellar", 9.99, 166));
+    media1->display();
+    cout << endl;
+    media2->display();
 
-    for(auto m : list){
-        m->display();
-    }
+    delete media1;
+    delete media2;  
 
-    for(auto m : list){
-        delete m;
-    }
+    
     return 0;
 }
