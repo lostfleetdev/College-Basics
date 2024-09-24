@@ -1,128 +1,48 @@
 """
-1. Write a Python program that takes two input numbers from the user and performs basic
-arithmetic operations: addition, subtraction, multiplication, division, and modulus. Display
-the results of each operation.
+1. Write a Python program that takes two numbers as input from the user and prints their
+sum.
 """
-# a common function for all
-def operations(num1, num2):
-    addition = num1 + num2
-    subtraction = num1 - num2
-    multiplication = num1 * num2
-    division = num1 / num2
-    modulus = num1 % num2
+n1 = int(input("Enter a Number :"))
+n2 = int(input("Enter another Number :"))
 
-    print(f"Addition: {num1} + {num2} = {addition}")
-    print(f"Subtraction: {num1} - {num2} = {subtraction}")
-    print(f"Multiplication: {num1} * {num2} = {multiplication}")
-    print(f"Division: {num1} / {num2} = {division}")
-    print(f"Modulus: {num1} % {num2} = {modulus}")
-
-
-num1 = int(input("Enter the first number: "))
-num2 = int(input("Enter the second number: "))
-operations(num1, num2)
+print(f"Sum: {n1} + {n2} = ", n1+n2)
+"""
+2. Write a Python program that asks the user for their name and then prints a greeting
+message that says "Hello, [name]!".
+"""
+name = input("Whats Your name? : ")
+print(f"Hello, {name}")
 
 
 """
-2. Write a Python program that accepts two floating-point numbers from the user and
-performs the same set of arithmetic operations: addition, subtraction, multiplication, division,
-and modulus. Display the results with appropriate formatting.
+3. Write a Python program that calculates the area of a rectangle. The program should ask the
+user to input the length and width of the rectangle and then display the calculated area.
 """
-# utlizing above function
-num3 = float(input("Enter the first number: "))
-num4 = float(input("Enter the second number: "))
-operations(num3, num4)
+b = float(input("Whats breadth?: "))
+l = float(input("Whats length ?: "))
 
-
+print(f"Area of rectangle is ", b*l)
 
 """
-3. Write a Python program that takes two input numbers from the user and demonstrates the
-use of comparison operators: equal to, not equal to, greater than, less than, greater than or
-equal to, and less than or equal to. Display the results of each comparison.
+4. Write a Python program that asks the user for their current age and then calculates and
+prints their age in five years.
 """
-# creating a similar function as above
-def comparisons(num1, num2):
-    equal_to = num1 == num2
-    not_equal_to = num1 != num2
-    greater_than = num1 > num2
-    less_than = num1 < num2
-    greater_than_or_equal_to = num1 >= num2
-    less_than_or_equal_to = num1 <= num2
-
-    # Display the results
-    print(f"{num1} == {num2} : {equal_to}")
-    print(f"{num1} != {num2} : {not_equal_to}")
-    print(f"{num1} > {num2}  : {greater_than}")
-    print(f"{num1} < {num2}  : {less_than}")
-    print(f"{num1} >= {num2} : {greater_than_or_equal_to}")
-    print(f"{num1} <= {num2} : {less_than_or_equal_to}")
-
-num1 = float(input("Enter the first number: "))
-num2 = float(input("Enter the second number: "))
-
-comparisons(num1, num2)
-
+a = int(input("Whats your age?: "))
+print(f"Your age in 5 years would be", a+5)
 
 """
-4. Write a Python program that takes three Boolean inputs from the user and demonstrates the
-use of logical operators: and, or, and not. Display the results of each logical operation.
+5. Write a Python program that calculates the simple interest on a principal amount. The
+program should ask the user to input the principal amount, the rate of interest, and the time
+period (in years). It should then display the calculated simple interest.
 """
-#similar as above functions
-def logical_operations(bool1, bool2, bool3):
-    and_result = bool1 and bool2 and bool3
-    or_result = bool1 or bool2 or bool3
-    not_result_bool1 = not bool1
-    not_result_bool2 = not bool2
-    not_result_bool3 = not bool3
+def calculate_simple_interest(principal, rate, time):
+    simple_interest = (principal * rate * time) / 100
+    return simple_interest
 
-    print(f"({bool1} and {bool2} and {bool3}) : {and_result}")
-    print(f"({bool1} or {bool2} or {bool3}) : {or_result}")
-    print(f"not {bool1} : {not_result_bool1}")
-    print(f"not {bool2} : {not_result_bool2}")
-    print(f"not {bool3} : {not_result_bool3}")
+principal = float(input("Enter the principal amount: "))
+rate = float(input("Enter the rate of interest (in %): "))
+time = float(input("Enter the time period (in years): "))
 
-# function to simplify function input from user
-def input_boolean(user_input):
-    if(user_input == 1):
-        return True
-    elif(user_input == 2):
-        return False
-    else:
-        return 1
+simple_interest = calculate_simple_interest(principal, rate, time)
 
-
-print("Enter 1 for True and 2 for false")
-bool1 = input_boolean(input("Enter the first Boolean value : "))
-bool2 = input_boolean(input("Enter the second Boolean value: "))
-bool3 = input_boolean(input("Enter the third Boolean value : "))
-
-logical_operations(bool1, bool2, bool3)
-
-
-
-
-"""
-5. Write a Python program that takes a list and an element from the user and demonstrates the
-use of membership operators (in, not in) and identity operators (is, is not). Display the results
-of this operation
-"""
-def identity_operations(user_list, element):
-    in_list = element in user_list
-    not_in_list = element not in user_list
-
-    is_same_object = element is user_list
-    is_not_same_object = element is not user_list
-
-    print(f"{element} in {user_list} : {in_list}")
-    print(f"{element} not in {user_list} : {not_in_list}")
-
-    print(f"{element} is {user_list} : {is_same_object}")
-    print(f"{element} is not {user_list} : {is_not_same_object}")
-
-
-user_input_list = input("Enter a list of elements separated by commas: ")
-user_list = user_input_list.split(",")
-
-element = input("Enter an element to check: ")
-
-identity_operations(user_list, element)
+print(f"The calculated simple interest is: {simple_interest}")
