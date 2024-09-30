@@ -11,8 +11,9 @@ void endline(){
 
 //printing an array
 void prntele(int ar[], int sz){
+    printf("Array Elements: ");
     for(int i = 0; i < sz; i++){
-        printf("element %d : %d\n", i, ar[i]);
+        printf("element  : %d\n", i, ar[i]);
     }
 }
 
@@ -63,6 +64,7 @@ void del(int arr[], int sz, int del_elmnt){
 int main(){
     int arr[5] = {18, 92, 65, 12, 1}; //array used for: printing, traverse, bubble sort
     
+    endline();
     printf("Printing an Array: \n");
     prntele(arr, 5);
     endline();
