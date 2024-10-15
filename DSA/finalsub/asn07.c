@@ -1,76 +1,144 @@
-#include<stdio.h> 
-#include<stdlib.h>  // Use stdlib.h instead of malloc.h for dynamic memory allocation
+#include <stdio.h>
+#include <stdlib.h>
 
-// Define a structure for the node
-struct node {
+// Definition of a binary tree node
+struct Node {
     int data;
-    struct node* left; 
-    struct node* right;
+    struct Node *left, *right;
 };
 
 // Function to create a new node
-struct node* createNode(int data) {
-    struct node *n;
-    n = (struct node*) malloc(sizeof(struct node)); // memory allocation
-    n->data = data;
-    n->left = NULL;
-    n->right = NULL;
-    return n;
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
 }
 
-// Preorder traversal: Root -> Left -> Right
-void preOrder(struct node* root) {
-    if (root != NULL) {
-        printf("%d ", root->data);
-        preOrder(root->left);
-        preOrder(root->right);
+// Function to insert a node into the binary tree
+struct Node* insertNode(struct Node* root, int data) {
+    if (root == NULL) {
+        return createNode(data);
+    }
+
+    // Use a simple rule to insert: Left for smaller, Right for larger
+    if (data < root->data) {
+        root->left = insertNode(root->left, data);
+    } else {
+        root->right = insertNode(root->right, data);
+    }
+    return root;
+}
+
+// Recursive Inorder Traversal (Left, Root, Right)
+void inorderRecursive(struct Node* root) {
+    if (root == NULL) return;
+    inorderRecursive(root->left);
+    printf("%d ", root->data);
+    inorderRecursive(root->right);
+}
+
+// Recursive Preorder Traversal (Root, Left, Right)
+void preorderRecursive(struct Node* root) {
+    if (root == NULL) return;
+    printf("%d ", root->data);
+    preorderRecursive(root->left);
+    preorderRecursive(root->right);
+}
+
+// Recursive Postorder Traversal (Left, Right, Root)
+void postorderRecursive(struct Node* root) {
+    if (root == NULL) return;
+    postorderRecursive(root->left);
+    postorderRecursive(root->right);
+    printf("%d ", root->data);
+}
+
+// Non-recursive Inorder Traversal using Stack
+void inorderNonRecursive(struct Node* root) {
+    if (root == NULL) return;
+    struct Node* stack[100];
+    int top = -1;
+    struct Node* curr = root;
+
+    while (curr != NULL || top != -1) {
+        while (curr != NULL) {
+            stack[++top] = curr;  // Push current node onto stack
+            curr = curr->left;    // Move to the left child
+        }
+        curr = stack[top--];      // Pop the node from stack
+        printf("%d ", curr->data);
+        curr = curr->right;       // Move to the right child
     }
 }
 
-// Postorder traversal: Left -> Right -> Root
-void postOrder(struct node* root) {
-    if (root != NULL) {
-        postOrder(root->left);
-        postOrder(root->right);
-        printf("%d ", root->data);
-    } 
+// Non-recursive Preorder Traversal using Stack
+void preorderNonRecursive(struct Node* root) {
+    if (root == NULL) return;
+    struct Node* stack[100];
+    int top = -1;
+    stack[++top] = root;
+
+    while (top != -1) {
+        struct Node* node = stack[top--];
+        printf("%d ", node->data);
+
+        if (node->right != NULL) stack[++top] = node->right;
+        if (node->left != NULL) stack[++top] = node->left;
+    }
 }
 
-// Inorder traversal: Left -> Root -> Right
-void inOrder(struct node* root) {
-    if (root != NULL) {
-        inOrder(root->left);
-        printf("%d ", root->data);
-        inOrder(root->right);
-    } 
+// Non-recursive Postorder Traversal using Two Stacks
+void postorderNonRecursive(struct Node* root) {
+    if (root == NULL) return;
+    struct Node* stack1[100], *stack2[100];
+    int top1 = -1, top2 = -1;
+
+    stack1[++top1] = root;
+
+    while (top1 != -1) {
+        struct Node* node = stack1[top1--];
+        stack2[++top2] = node;
+
+        if (node->left != NULL) stack1[++top1] = node->left;
+        if (node->right != NULL) stack1[++top1] = node->right;
+    }
+
+    while (top2 != -1) {
+        struct Node* node = stack2[top2--];
+        printf("%d ", node->data);
+    }
 }
 
+// Main function
 int main() {
-    // creating nodes
-    struct node *p = createNode(2); 
-    struct node *p1 = createNode(4); 
-    struct node *p2 = createNode(6); 
-    struct node *p3 = createNode(8); 
-    struct node *p4 = createNode(1);
+    struct Node* root = NULL;
+    int value;
 
-    // nodes in a tree
-    p->left = p1;
-    p->right = p2; 
-    p1->left = p3; 
-    p1->right = p4;
+    printf("Enter values to insert into the binary tree (enter -1 to stop):\n");
+    while (1) {
+        scanf("%d", &value);
+        if (value == -1) break;
+        root = insertNode(root, value);
+    }
 
-    // traversals
-    printf("Preorder: ");
-    preOrder(p); 
-    printf("\n");
+    printf("\nInorder Traversal (Recursive): ");
+    inorderRecursive(root);
 
-    printf("Postorder: ");
-    postOrder(p); 
-    printf("\n");
+    printf("\nPreorder Traversal (Recursive): ");
+    preorderRecursive(root);
 
-    printf("Inorder: ");
-    inOrder(p); 
-    printf("\n");
+    printf("\nPostorder Traversal (Recursive): ");
+    postorderRecursive(root);
+
+    printf("\nInorder Traversal (Non-Recursive): ");
+    inorderNonRecursive(root);
+
+    printf("\nPreorder Traversal (Non-Recursive): ");
+    preorderNonRecursive(root);
+
+    printf("\nPostorder Traversal (Non-Recursive): ");
+    postorderNonRecursive(root);
 
     return 0;
 }
