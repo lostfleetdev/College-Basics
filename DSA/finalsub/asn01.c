@@ -10,12 +10,13 @@ void endline(){
 }
 
 //printing an array
-void prntele(int ar[], int sz){
-    printf("Array Elements: ");
-    for(int i = 0; i < sz; i++){
-        printf("element  : %d\n", i, ar[i]);
+void prntele(int ar[], int sz) {
+    printf("Array Elements:\n");
+    for(int i = 0; i < sz; i++) {
+        printf("element %d : %d\n", i, ar[i]); 
     }
 }
+
 
 //traverse of an array
 void travrs(int ar[], int sz){
@@ -61,25 +62,37 @@ void del(int arr[], int sz, int del_elmnt){
     }
 }
 
+// function to take input and 
+void createArray(int arr[], int n) {
+    for(int i = 0; i < n; i++) {
+        printf("Enter element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+}
+
 int main(){
-    int arr[5] = {18, 92, 65, 12, 1}; //array used for: printing, traverse, bubble sort
-    
+    int n; //array used for: printing, traverse, bubble sort
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+    int arr[n];
+    createArray(arr, n);
+
     endline();
     printf("Printing an Array: \n");
-    prntele(arr, 5);
+    prntele(arr, n);
     endline();
     
     printf("Traversing an Array: \n");
-    travrs(arr, 5);
+    travrs(arr, n);
     endline();
     
     printf("Sorting the above array using bubble sort: \n");
-    bblsrt(arr, 5);
+    bblsrt(arr, n);
     endline();
     
-    printf("Updating the above array by replacing an element: \n");
+    printf("Updating the above array by replacing an element at index 3 with 69: \n");
     upd(arr, 3, 69);
-    travrs(arr, 5);
+    travrs(arr, n);
     endline();
     
     printf("Inserting an element in the array: \n");

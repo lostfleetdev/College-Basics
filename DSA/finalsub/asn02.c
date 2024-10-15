@@ -1,91 +1,76 @@
 #include <stdio.h>
+#include <string.h>
 
-// Function to print the array
-int prnt_ar(int arr[], int sz, char g){
-    if(g == 'o'){
-        printf("Original Array: \n");
-    }
-    else if(g == 'r'){
-        printf("Sorted Array: \n");
-    }
-    
-    for(int i = 0; i < sz; i++){
-        printf("%d\t", arr[i]);
-    }
-    printf("\n");
-    return 0;
-}
+// Define the Student structure
+struct Student {
+    char name[50];
+    int roll_no;
+    float sgpa;
+};
 
-// Bubble sort
-int bblsrt(int arr[], int sz){
-    int temp, cnt = 0;
-    for(int j = 0; j < sz; j++){
-        for(int i = 0; i < sz - 1; i++){
-            if(arr[i] > arr[i + 1]){
-                temp = arr[i];
-                arr[i] = arr[i + 1];
-                arr[i + 1] = temp;
-                cnt++;
+// Function to sort students by roll number using Bubble Sort
+void sortByRollNo(struct Student students[], int n) {
+    struct Student temp;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (students[j].roll_no > students[j + 1].roll_no) {
+                temp = students[j];
+                students[j] = students[j + 1];
+                students[j + 1] = temp;
             }
         }
     }
-    return cnt;
 }
 
-// Insertion sort
-int insrt_srt(int arr[], int sz){
-    int i, j, k, cnt = 0;
-    for(i = 1; i < sz; i++){
-        k = arr[i];
+// Function to sort students by name using Insertion Sort
+void sortByName(struct Student students[], int n) {
+    struct Student key;
+    int j;
+    for (int i = 1; i < n; i++) {
+        key = students[i];
         j = i - 1;
-        
-        while(j >= 0 && arr[j] > k){
-            arr[j + 1] = arr[j];
+
+        // Move elements that are greater than the key to one position ahead
+        while (j >= 0 && strcmp(students[j].name, key.name) > 0) {
+            students[j + 1] = students[j];
             j = j - 1;
-            cnt++;
         }
-        arr[j + 1] = k;
-    }   
-    return cnt;  
+        students[j + 1] = key;
+    }
 }
 
-int main(){
-    int ar[100], s;
-    printf("Program to Show use of sorting techniques\n");
-    printf("Enter the size of your array: ");
-    scanf("%d", &s);
-    printf("Enter %d elements: \n", s);
-    
-    for(int i = 0; i < s; i++){
-        scanf("%d", &ar[i]);
+// Function to display the student list
+void displayStudents(struct Student students[], int n) {
+    printf("Roll No\tName\t\tSGPA\n");
+    printf("----------------------------\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d\t%-10s\t%.2f\n", students[i].roll_no, students[i].name, students[i].sgpa);
     }
-    
-    prnt_ar(ar, s, 'o');
-    
-    int chs, co;
-    printf("Select sorting method to be used on array: \n1 for Bubble sort\n2 for Insertion Sort\n");
-    scanf("%d", &chs);
-    
-    switch(chs){
-    case 1:
-        printf("Array Sorted With Bubble sort: \n");
-        co = bblsrt(ar, s);
-        prnt_ar(ar, s, 'r');
-        break;
-    
-    case 2:
-        printf("Array sorted with Insertion sort: \n");
-        co = insrt_srt(ar, s);
-        prnt_ar(ar, s, 'r');
-        break;
-    
-    default:
-        printf("Enter valid option.\n");
-        break;
-    }
-    
-    printf("Steps required: %d\n", co);
-    
+}
+
+int main() {
+    // Initialize the student database
+    struct Student students[] = {
+        {"Pratik", 4, 8.5}, {"Prem", 2, 9.2}, {"Rohan", 1, 7.8},
+        {"Rushi", 3, 8.0}, {"Prince", 7, 7.2}, {"Vedant", 10, 9.0},
+        {"Raman", 9, 6.5}, {"Palak", 5, 7.9}, {"Rutika", 6, 9.9}
+    };
+
+    int n = sizeof(students) / sizeof(students[0]);
+
+    // Display original list
+    printf("Original Student List:\n");
+    displayStudents(students, n);
+
+    // Sort by Roll Number using Bubble Sort and display
+    sortByRollNo(students, n);
+    printf("\nSorted by Roll Number (Using Bubble Sort):\n");
+    displayStudents(students, n);
+
+    // Sort by Name using Insertion Sort and display
+    sortByName(students, n);
+    printf("\nSorted by Name (Using Insertion Sort):\n");
+    displayStudents(students, n);
+
     return 0;
 }
-    
