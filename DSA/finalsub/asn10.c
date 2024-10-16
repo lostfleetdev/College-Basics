@@ -3,11 +3,16 @@
 #include <limits.h>
 
 #define MAX_OFFICES 100 // Maximum number of offices
+#define MAX_EDGES 1000  // Maximum number of edges
 
-// Function to find the office with the minimum key value
+// Structure to represent an edge
+typedef struct {
+    int src, dest, weight;
+} Edge;
+
+// Function to find the office with the minimum key value (for Prim's algorithm)
 int minKey(int key[], int mstSet[], int numOffices) {
     int min = INT_MAX, minIndex;
-
     for (int v = 0; v < numOffices; v++) {
         if (!mstSet[v] && key[v] < min) {
             min = key[v];
@@ -48,15 +53,64 @@ void primMST(int graph[MAX_OFFICES][MAX_OFFICES], int numOffices) {
     }
 
     // Print the constructed MST
+    printf("Prim's Algorithm:\n");
     printf("Edge \tWeight\n");
     for (int i = 1; i < numOffices; i++) {
         printf("%d - %d\t%d\n", parent[i], i, graph[i][parent[i]]);
     }
 }
 
+// Function to find the root of a node (for Kruskal's algorithm)
+int find(int parent[], int i) {
+    if (parent[i] == -1) {
+        return i;
+    }
+    return find(parent, parent[i]);
+}
+
+// Function to perform union of two subsets (for Kruskal's algorithm)
+void unionSets(int parent[], int x, int y) {
+    int xset = find(parent, x);
+    int yset = find(parent, y);
+    parent[xset] = yset;
+}
+
+// Function to implement Kruskal's algorithm to find the minimum spanning tree
+void kruskalMST(Edge edges[], int numEdges, int numOffices) {
+    int parent[MAX_OFFICES];
+    for (int i = 0; i < numOffices; i++) {
+        parent[i] = -1; // Initialize all subsets as single elements
+    }
+
+    // Sort edges based on weight
+    for (int i = 0; i < numEdges - 1; i++) {
+        for (int j = 0; j < numEdges - i - 1; j++) {
+            if (edges[j].weight > edges[j + 1].weight) {
+                // Swap edges
+                Edge temp = edges[j];
+                edges[j] = edges[j + 1];
+                edges[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("\nKruskal's Algorithm:\n");
+    printf("Edge \tWeight\n");
+    for (int i = 0; i < numEdges; i++) {
+        int x = find(parent, edges[i].src);
+        int y = find(parent, edges[i].dest);
+
+        // If including this edge does not cause a cycle
+        if (x != y) {
+            printf("%d - %d\t%d\n", edges[i].src, edges[i].dest, edges[i].weight);
+            unionSets(parent, x, y);
+        }
+    }
+}
+
 // Main function
 int main() {
-    // Adjacency matrix representation of the graph
+    // Adjacency matrix representation of the graph for Prim's algorithm
     int graph[MAX_OFFICES][MAX_OFFICES] = {
         {0, 2, 0, 6, 0},
         {2, 0, 3, 8, 5},
@@ -64,9 +118,23 @@ int main() {
         {6, 8, 0, 0, 9},
         {0, 5, 7, 9, 0}
     };
-    
+
     int numOffices = 5; // Total number of offices
-    primMST(graph, numOffices); // Call the function to find the MST
+    primMST(graph, numOffices); // Call the function to find the MST using Prim's algorithm
+
+    // Edge list representation of the graph for Kruskal's algorithm
+    Edge edges[] = {
+        {0, 1, 2},
+        {0, 3, 6},
+        {1, 2, 3},
+        {1, 3, 8},
+        {1, 4, 5},
+        {2, 4, 7},
+        {3, 4, 9}
+    };
+    int numEdges = sizeof(edges) / sizeof(edges[0]); // Number of edges
+
+    kruskalMST(edges, numEdges, numOffices); // Call the function to find the MST using Kruskal's algorithm
 
     return 0;
 }
