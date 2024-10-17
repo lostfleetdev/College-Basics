@@ -151,14 +151,21 @@ void BFS(struct Graph* graph, char* start) {
 int main() {
     struct Graph* g = createGraph(0); // Create an empty graph
 
-    // Adding edges to the graph
+    // Adding edges to the graph (creating a more interconnected graph)
     addEdge(g, "A", "B");
     addEdge(g, "A", "C");
-    addEdge(g, "B", "D");
-    addEdge(g, "C", "E");
+    addEdge(g, "A", "D");
+    addEdge(g, "B", "C");
+    addEdge(g, "B", "E");
     addEdge(g, "C", "F");
-    addEdge(g, "E", "G");
+    addEdge(g, "D", "F");
+    addEdge(g, "D", "G");
+    addEdge(g, "E", "H");
     addEdge(g, "F", "G");
+    addEdge(g, "F", "H");
+    addEdge(g, "G", "I");
+    addEdge(g, "H", "I");
+    addEdge(g, "I", "A");
 
     // Perform DFS and BFS
     DFS(g, "A");
