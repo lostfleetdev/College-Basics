@@ -1,3 +1,8 @@
+/* Name    : Raman Bhise 
+   Roll no.: 52 
+   Class   : IT SY B  
+   Batch   : C 
+   Subject : DSA Lab*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -147,17 +152,17 @@ int main() {
     struct Graph* g = createGraph(0); // Create an empty graph
 
     // Adding edges to the graph
-    addEdge(g, "Shaniwar Wada", "Aga Khan Palace");
-    addEdge(g, "Shaniwar Wada", "Sinhagad Fort");
-    addEdge(g, "Aga Khan Palace", "Dagdusheth Halwai Ganapati Temple");
-    addEdge(g, "Dagdusheth Halwai Ganapati Temple", "Pataleshwar Cave Temple");
-    addEdge(g, "Pataleshwar Cave Temple", "Pune University");
-    addEdge(g, "Pune University", "Osho Ashram");
-    addEdge(g, "Sinhagad Fort", "Osho Ashram");
+    addEdge(g, "A", "B");
+    addEdge(g, "A", "C");
+    addEdge(g, "B", "D");
+    addEdge(g, "C", "E");
+    addEdge(g, "C", "F");
+    addEdge(g, "E", "G");
+    addEdge(g, "F", "G");
 
     // Perform DFS and BFS
-    DFS(g, "Shaniwar Wada");
-    BFS(g, "Shaniwar Wada");
+    DFS(g, "A");
+    BFS(g, "A");
 
     // Free allocated memory
     for (int i = 0; i < g->numVertices; i++) {
